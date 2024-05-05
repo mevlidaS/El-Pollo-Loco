@@ -5,6 +5,10 @@ class World{
     ctx;
     keyboard;
     camera_x = 0;
+    statusBar = new StatusBar();
+    statusBarCoins = new StatusBarCoins();
+    statusBarBottles = new StatusBarBottles();
+    throwableObject = [];
     
    
     constructor(canavas, keyboard){
@@ -13,21 +17,35 @@ class World{
         this.keyboard = keyboard;
         this.draw();
         this.setWorld();
-        this.checkCollisions();
+        this.run();
     }
     
     setWorld(){
         this.character.world = this;
     }
 
-    checkCollisions(){
+    run(){
         setInterval(() => {
-            this.level.enemies.forEach((enemy) => {
-                if(this.character.isColliding(enemy)){
+            this.checkCollisions();
+            this.checkThrowObjects();
+    }, 200)
+    }
+
+    checkThrowObjects(){
+        if(this.keyboard.SPACE){
+            let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
+            this.throwableObject.push(bottle)
+
+    }
+}
+
+    checkCollisions(){
+        this.level.enemies.forEach((enemy) => {
+            if(this.character.isColliding(enemy)){
                     this.character.hit();
-                }
-            })
-        }, 200)
+                    this.statusBar.setProcentage(this.character.energy);
+            }
+        });  
     }
 
 
@@ -35,9 +53,18 @@ class World{
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.translate(this.camera_x, 0);
         this.addObjectsToMap(this.level.backgroundObjects);
-        this.addToMap(this.character);
+
+        this.ctx.translate(-this.camera_x, 0); // back 
+        // Space for fixed Objects
+        this.addToMap(this.statusBar);
+        this.addToMap(this.statusBarCoins);
+        this.addToMap(this.statusBarBottles);
+        this.ctx.translate(this.camera_x, 0);  // forwards
+
+        this.addToMap(this.character);  
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.level.clouds);
+        this.addObjectsToMap(this.throwableObject);
         this.ctx.translate(-this.camera_x, 0);
        
 
