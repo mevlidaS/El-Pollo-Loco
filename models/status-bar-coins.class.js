@@ -28,6 +28,14 @@ class StatusBarCoins extends DrawableObject {
         this.img = this.imageCache[path];
     }
 
+    collectCoin() {
+        this.coinAmount += 20;
+        if (this.coinAmount > 100) {
+            this.coinAmount = 100;
+        }
+    }
+
+
     resolveImageIndex() {
         if (this.percentage == 100) {
             return 5;   

@@ -8,11 +8,73 @@ body{
     background-size: cover;
     min-height: 100vh;
     justify-content: center;
+    margin: 0;
 
 }
 canvas{
     background-color: black;
     display: block;
+    border-radius: 10px;
+    border: 1px solid black;
+    /* width: 100%; */
+}
+
+h1{
+    font-size: 60px;
+    font-family: "Bungee Spice", sans-serif;
+}
+
+.startscreenImg,
+.endscreenImg{
+    position: absolute;
+    border-radius: 10px;
+    width: 720px;
+    height: 480px;
+    border: 1px solid black;
+    
+}
+.startButton{
+    position : absolute;
+    top: 40%;
+    left:50%;
+    transform: translate(-50%,-50%);
+    width: 200px;
+    height: 50px;
+    font-size: 30px;
+    cursor: pointer;
+    border-radius: 10px;
+    border: unset;
+    background-color: #FFDA28;
+
+}
+.icon_audio{
+    width: 32px;
+    height: 32px;
+    position : absolute;
+    top: 33%;
+    left:65%;
+    transform: translate(-50%,-50%);
+    cursor: pointer;
+}
+.icon_fullscreen{
+    width: 32px;
+    height: 32px;
+    position : absolute;
+    top: 33%;
+    left:67%;
+    transform: translate(-50%,-50%);
+    cursor: pointer;
+}
+
+
+
+.d-none{
+    display: none;
+}
+
+@font-face {
+    font-family: "Bungee Spice", sans-serif;
+    src: url(./fonts/Bungee_Spice/BungeeSpice-Regular.ttf);
 }
 
 @media only screen and (max-width: 720px) {
@@ -24,5 +86,10 @@ canvas{
 @media only screen and (max-height: 480px) {
     canvas{
         height: 100vh;
+        width: 100%;
     }
+    h1{
+        display: none;
+    }
+
 }
