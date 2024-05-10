@@ -6,6 +6,7 @@ class MovableObject extends DrawableObject {
     acceleration = 2.5;
     energy = 100;
     lastHit = 0;
+    offset; 
 
     applyGravity() {
         setInterval(() => {
@@ -20,31 +21,38 @@ class MovableObject extends DrawableObject {
         if(this instanceof ThrowableObject){
             return true;
         } else{
-            return this.y < 100;
+            return this.y < 180;
         }
     }
     
 
-isColliding (mo) {
-    return  this.x + this.width >= mo.x && 
-            this.y + this.height > mo.y &&
-            this.x < mo.x &&
-            this.y < mo.y + mo.height;
-    }
+    isColliding (mo) {
+        return (
+            this.x + this.width - this.offset.right > mo.x + mo.offset.left &&
+            this.y + this.height - this.offset.bottom > mo.y + mo.offset.top &&
+            this.x + this.offset.left < mo.x + mo.width - mo.offset.right &&
+            this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom
+          );
+        }
 
-hit() {
-    this.energy -= 5;
-    if(this.energy < 0) {
-        this.energy = 0;
-    } else{
-        this.lastHit = new Date().getTime();
+hit(lastJump) {
+    if (lastJump == false) {
+        let currentTime = new Date().getTime();  
+        if (currentTime - this.lastHit > 1000) {
+            this.energy -= 25;
+            if (this.energy <= 0 && !this.isDead) {
+                this.character.checkIfDead();
+            }
+            this.lastHit = currentTime;
+        }
     }
 }
+
 
 isHurt() {
     let timepassed = new Date().getTime() - this.lastHit;
     timepassed = timepassed / 1000;
-    return timepassed < 0.5;
+    return timepassed < 1;
 }
 
 isDead() {
@@ -61,6 +69,7 @@ isDead() {
 
     jump(){
         this.speedY = 25;
+        this.idleTime = new Date().getTime();
     }
 
     playAnimation(images) {

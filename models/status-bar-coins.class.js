@@ -23,9 +23,9 @@ class StatusBarCoins extends DrawableObject {
         this.setPercentage(0);
     }
 
-    setPercentage(coinAmount) { // Corrected function name
+    setPercentage(coinAmount) { 
         this.coinAmount = coinAmount;
-        let percentage = Math.floor((this.coinAmount / 100) * 100); // Calculate percentage
+        let percentage = Math.floor((this.coinAmount / 100) * 100); 
         let imageIndex = Math.min(Math.floor(percentage / 20), this.IMAGES_COINS.length - 1);
         let path = this.IMAGES_COINS[imageIndex];
         this.img = this.imageCache[path];
@@ -36,7 +36,7 @@ class StatusBarCoins extends DrawableObject {
         if (this.coinAmount > 100) {
             this.coinAmount = 100;
         }
-        this.setPercentage(this.coinAmount); // Update status bar when collecting coins
+        this.setPercentage(this.coinAmount);
     }
 
     resolveImageIndex() {
