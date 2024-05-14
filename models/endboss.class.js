@@ -4,10 +4,10 @@ class Endboss extends MovableObject {
     y = 50;
     isDead = false;
     offset = {
-        top: 380,
-        bottom: 340,
-        left: 300,
-        right: 300
+        top: 70,
+        bottom: 10,
+        left: 60,
+        right: 30,
     }
     firstContact = false;
     endbossAlerted = false;
@@ -23,6 +23,7 @@ class Endboss extends MovableObject {
     maxEnergy = 25;
     damagePerHit = 20;
     energy = 150;
+    // endboss_hurt_sound = new Audio('audio/endboss_hurt (2).wav');
     IMAGES_WALKING = [
         'img/4_enemie_boss_chicken/1_walk/G1.png',
         'img/4_enemie_boss_chicken/1_walk/G2.png',
@@ -159,8 +160,7 @@ class Endboss extends MovableObject {
         if (this.energy >= 60){
             this.inDamageState = true;
             this.playAnimation(this.IMAGES_HURT);
-            // playAudio(endbossHurtSound);
-
+          playAudio(endbossHurtSound);
             setTimeout(() => {
                 this.inDamageState = false;
                 if (!this.isDead) {
@@ -173,7 +173,8 @@ class Endboss extends MovableObject {
             this.inDamageState = true;
             this.aggressive = true;
             this.playAnimation(this.IMAGES_ATTACK);
-            // playAudio(endbossHurtSound);
+          playAudio(endbossHurtSound);
+          
 
             setTimeout(() => {
                 if (!this.isDead) {
@@ -192,7 +193,7 @@ class Endboss extends MovableObject {
     bossIsHurt() {
         this.inDamageState = true;
         this.playAnimation(this.IMAGES_HURT);
-        // playAudio(endbossHurtSound);
+        playAudio(endbossHurtSound);
 
         setTimeout(() => {
             this.inDamageState = false;

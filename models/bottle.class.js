@@ -14,6 +14,7 @@ class Bottle extends MovableObject {
         left: 30,
         right: 30,
       };
+    
 
     IMAGES_SALSABOTTLE = [
         'img/6_salsa_bottle/salsa_bottle.png'

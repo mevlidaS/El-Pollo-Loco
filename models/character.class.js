@@ -11,6 +11,11 @@ class Character extends MovableObject{
         right: 30,
       };
 
+// walkingSound = new Audio('audio/running.mp3');
+// getHurtSound = new Audio('audio/character_hurt.mp3');
+// jumpSound = new Audio('audio/pepe_jump.wav');
+// sleepSound =new Audio ('audio/sleep.wav')
+
 
     idleTime = new Date().getTime();
     killed = false;
@@ -74,7 +79,6 @@ class Character extends MovableObject{
         'img/2_character_pepe/4_hurt/H-43.png',
     ]
     world;
-    // walking_sound = new Audio('audio/running.mp3');
     constructor(){
         super().loadImage('img/2_character_pepe/2_walk/W-21.png');
         this.loadImages(this.IMAGES_WALKING);
@@ -97,16 +101,16 @@ class Character extends MovableObject{
             if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
                 this.moveRight();
                 this.otherDirection = false;
-                // playAudio(walkingSound);
+                playAudio(walkingSound);
             }
             if (this.world.keyboard.LEFT && this.x > 0) {
                 this.moveLeft();
                 this.otherDirection = true;
-                // playAudio(walkingSound);
+                playAudio(walkingSound);
             }
             if (this.world.keyboard.UP && !this.isAboveGround()) {
                 this.jump();
-                // playAudio(jumpSound);
+                playAudio(jumpSound);
             }
             this.world.camera_x = -this.x + 100;
 
@@ -120,7 +124,7 @@ class Character extends MovableObject{
                 this.playAnimation(this.IMAGES_DEAD);
             } else if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT);
-                // playAudio(getHurtSound);
+               playAudio(getHurtSound);
             } else if (this.isAboveGround()) {
                 this.playAnimation(this.IMAGES_JUMPING);
             } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
@@ -128,21 +132,24 @@ class Character extends MovableObject{
                 this.idleTime = currentTime;
             } else if (timeSinceLastMove > 5000) {
                 this.playAnimation(this.IMAGES_LONG_IDLE);
+                playAudio(sleepSound);
             } else if (!this.isAboveGround()) {
                 this.playAnimation(this.IMAGES_IDLE);
             }
         }, 1000 / 10);
     }
 
+   
+    
+    
     checkIfDead() {
         if (this.energy == 0) {
             this.killed = true;
             this.playAnimation(this.IMAGES_DEAD);
-        //     showEndScreen();
-        //     clearAllIntervals();
+            showEndScreen();
+            clearAllIntervals();
 
-        //     stopAllSounds();
-        // }
+            stopAllSounds();
+        }
     }
-}
 }

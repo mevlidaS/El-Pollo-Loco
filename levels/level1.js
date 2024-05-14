@@ -37,7 +37,11 @@
             new Bottle(1200,300),
             new Bottle(1500,200),
             new Bottle(1800,150),
+            new Bottle(1900,200),
+            new Bottle(2000,150),
             new Bottle(2100,200),
+            new Bottle(2200,150),
+            new Bottle(2300,200),
         ],
     [
         new BackgroundObject('img/5_background/layers/air.png', -719),
