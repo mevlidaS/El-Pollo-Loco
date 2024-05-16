@@ -23,7 +23,6 @@ class Endboss extends MovableObject {
     maxEnergy = 25;
     damagePerHit = 20;
     energy = 150;
-    // endboss_hurt_sound = new Audio('audio/endboss_hurt (2).wav');
     IMAGES_WALKING = [
         'img/4_enemie_boss_chicken/1_walk/G1.png',
         'img/4_enemie_boss_chicken/1_walk/G2.png',
@@ -32,16 +31,16 @@ class Endboss extends MovableObject {
     
     ];
 
- IMAGES_ALERT = [
-     'img/4_enemie_boss_chicken/2_alert/G5.png',
-     'img/4_enemie_boss_chicken/2_alert/G6.png',
-     'img/4_enemie_boss_chicken/2_alert/G7.png',
-     'img/4_enemie_boss_chicken/2_alert/G8.png',
-     'img/4_enemie_boss_chicken/2_alert/G9.png',
-     'img/4_enemie_boss_chicken/2_alert/G10.png',
-     'img/4_enemie_boss_chicken/2_alert/G11.png',
-     'img/4_enemie_boss_chicken/2_alert/G12.png'
- ]
+    IMAGES_ALERT = [
+        'img/4_enemie_boss_chicken/2_alert/G5.png',
+        'img/4_enemie_boss_chicken/2_alert/G6.png',
+        'img/4_enemie_boss_chicken/2_alert/G7.png',
+        'img/4_enemie_boss_chicken/2_alert/G8.png',
+        'img/4_enemie_boss_chicken/2_alert/G9.png',
+        'img/4_enemie_boss_chicken/2_alert/G10.png',
+        'img/4_enemie_boss_chicken/2_alert/G11.png',
+        'img/4_enemie_boss_chicken/2_alert/G12.png'
+    ];
 
     IMAGES_ATTACK = [
         'img/4_enemie_boss_chicken/3_attack/G13.png',
@@ -66,6 +65,11 @@ class Endboss extends MovableObject {
         'img/4_enemie_boss_chicken/5_dead/G26.png'
     ];
 
+    /**
+     * Constructor for initializing the Endboss with various images and properties.
+     *
+     * @return {void} No return value.
+     */
     constructor() {
         super().loadImage('img/4_enemie_boss_chicken/2_alert/G5.png');
         this.loadImages(this.IMAGES_WALKING);
@@ -81,18 +85,32 @@ class Endboss extends MovableObject {
         this.groundLevel = 40;
     }
 
+    /**
+     * Sets the flag to indicate entering and starts continuous movement.
+     *
+     * @param {void} No parameters.
+     * @return {void} No return value.
+     */
     enterRoom() {
         this.isEntering = true;
         this.startContinuousMovement();
     }
 
+    /**
+     * Starts continuous movement at a set interval.
+     */
     startContinuousMovement() {
         this.movementInterval = setInterval(() => {
             this.moveLeft();
-
         }, 2000 / 60);
     }
 
+    /**
+     * Initiates a jump action for the end boss if not currently jumping.
+     *
+     * @param {void} No parameters.
+     * @return {void} No return value.
+     */
     jump() {
         if (!this.isJumping) {
             this.isJumping = true;
@@ -107,11 +125,16 @@ class Endboss extends MovableObject {
                     this.fall();
                 }
             };
-
             moveUp();
         }
     }
 
+    /**
+     * Updates the falling behavior of the end boss.
+     *
+     * @param {void} No parameters.
+     * @return {void} No return value.
+     */
     fall() {
         if (this.y < this.groundLevel) {
             this.speedY += 0.5;
@@ -141,7 +164,12 @@ class Endboss extends MovableObject {
         }, 9000 / 60);
     }
 
-
+    /**
+     * Plays the animation for the object using the provided images.
+     *
+     * @param {array} images - The array of image paths for the animation.
+     * @return {void} No return value.
+     */
     playAnimation(images) {
         let index = Math.floor(this.currentImage % images.length);
         let path = images[index];
@@ -149,10 +177,15 @@ class Endboss extends MovableObject {
         this.currentImage += 0.5;
     }
 
-
+    /**
+     * Handles the logic when the Endboss receives a hit by a bottle.
+     * Updates the energy level, checks if the Endboss is dead, and triggers corresponding animations.
+     *
+     * @param {void} No parameters.
+     * @return {void} No return value.
+     */
     receiveHitByBottle() {
         this.energy -= this.damagePerHit;
-        console.log(this.energy);
         if (this.energy <= 0) {
             this.isDead = true;
             this.playAnimation(this.IMAGES_DEAD);
@@ -168,33 +201,31 @@ class Endboss extends MovableObject {
                 }
             }, 20000 / 60 );
         }
-
         if (this.energy <= 60){
             this.inDamageState = true;
             this.aggressive = true;
             this.playAnimation(this.IMAGES_ATTACK);
-          playAudio(endbossHurtSound);
-          
-
+            playAudio(endbossHurtSound);
             setTimeout(() => {
                 if (!this.isDead) {
                     this.inDamageState = false;
                     this.playAnimation(this.IMAGES_WALKING);
                     this.aggressive = false;
                 }
-
             }, 60000 / 60 );
-
         }           
-
     }
 
-
+    /**
+     * Sets the Endboss in a hurt state, plays the hurt animation, and triggers a hurt sound.
+     *
+     * @param {void} No parameters.
+     * @return {void} No return value.
+     */
     bossIsHurt() {
         this.inDamageState = true;
         this.playAnimation(this.IMAGES_HURT);
         playAudio(endbossHurtSound);
-
         setTimeout(() => {
             this.inDamageState = false;
         }, 12000 / 60 );
@@ -204,14 +235,18 @@ class Endboss extends MovableObject {
         if (this.animationFrameId) {
             cancelAnimationFrame(this.animationFrameId);
         }
-
         const animate = () => {
             this.animationFrameId = requestAnimationFrame(animate);
         };
-
         this.animationFrameId = requestAnimationFrame(animate);
     }
 
+    /**
+     * Stops the actions of the Endboss by clearing the movement interval and canceling the animation frame.
+     *
+     * @param {void} No parameters.
+     * @return {void} No return value.
+     */
     stopActions() {
         clearInterval(this.movementInterval);
         cancelAnimationFrame(this.animationFrameId);

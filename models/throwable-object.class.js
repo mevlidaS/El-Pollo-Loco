@@ -1,5 +1,4 @@
 class ThrowableObject extends MovableObject {
-
 isBreaking = false;
 deletable = false;
 isShooted = false;
@@ -9,7 +8,6 @@ offset = {
     left: 0,
     right: 0,
   };
-
 
 IMAGES_ROTATE = [
     'img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png',
@@ -45,18 +43,39 @@ constructor(x, y,direction) {
     this.animateBottle();
 }
 
+/**
+ * Function that initiates throwing behavior of the object, applying gravity and moving it based on direction.
+ *
+ * @param {void} No parameters.
+ * @return {void} No return value.
+ */
 trow() {
-
     this.speedY = 20;
     this.applyGravity();
     let moveInterval = setInterval(() => {
-            this.x += 20;
+
+        if (this.otherDirection  ) {
+            this.x += -20;
             if (this.deletable) {
                 clearInterval(moveInterval);
             }
+        }
+
+        if (!this.otherDirection) {
+            this.x += +20;
+            if (this.deletable) {
+                clearInterval(moveInterval);
+            }
+        }
     }, 50);
 }
 
+/**
+ * Initiates the breaking and splashing behavior of the throwable object.
+ *
+ * @param {void} No parameters.
+ * @return {void} No return value.
+ */
 breakAndSplash() {
     this.isBreaking = true;
     this.playAnimation(this.IMAGES_BOTTLE_SPLASH);
@@ -65,12 +84,24 @@ breakAndSplash() {
     this.deletable = true;
 }
 
+/**
+ * Checks if the animation of the object is finished based on the current image index and splash images.
+ *
+ * @return {boolean} Indicates whether the animation is finished.
+ */
 animationFinished() {
     if (this.IMAGES_SPLASH && this.IMAGES_SPLASH.length > 0) {
         return this.currentImageIndex === this.IMAGES_SPLASH.length - 1;
     }
     return false;
 }
+
+/**
+ * Animates the Bottle object by playing the rotation animation until it breaks.
+ *
+ * @param {void} No parameters.
+ * @return {void} No return value.
+ */
 animateBottle() {
     let animationInterval = setInterval(() => {
         if (!this.isBreaking) {

@@ -1,20 +1,28 @@
-
- let level1; 
+let level1; 
  
- function initLevel() {
+ /**
+  * Initializes the level with chickens, endboss, clouds, coins, bottles, and background objects.
+  *
+  * @return {void} No return value
+  */
+function initLevel() {
  
  level1= new Level(
         [
             new Chicken(600),
-            new Chicken(1000),
-            new Chicken(1400),
-            new SmallChicken(800),
-            new SmallChicken(1200),
-            new SmallChicken(1500),
+            new Chicken(1500),
+            new Chicken(1900),
+            new Chicken(2800),
+            new SmallChicken(400),
+            new SmallChicken(900),
+            new SmallChicken(2100),
+            new SmallChicken(2700),
         ],
+
         [
             new Endboss(),
         ],
+
         [
             new Cloud(500),
             new Cloud(1200),
@@ -31,19 +39,20 @@
         ],
 
         [
-            new Bottle(300, 300),
-            new Bottle(600,250),
-            new Bottle(900,150),
-            new Bottle(1200,300),
-            new Bottle(1500,200),
-            new Bottle(1800,150),
-            new Bottle(1900,200),
-            new Bottle(2000,150),
-            new Bottle(2100,200),
-            new Bottle(2200,150),
-            new Bottle(2300,200),
+            new Bottle(300,200),
+            new Bottle(600,150),
+            new Bottle(800,250),
+            new Bottle(900,300),
+            new Bottle(1200,200),
+            new Bottle(1400,250),
+            new Bottle(1500,150),
+            new Bottle(2200,300),
+            new Bottle(2400,250),
+            new Bottle(2500,200),
+            new Bottle(2800,300),
         ],
-    [
+
+        [
         new BackgroundObject('img/5_background/layers/air.png', -719),
         new BackgroundObject('img/5_background/layers/3_third_layer/2.png' , -719),
         new BackgroundObject('img/5_background/layers/2_second_layer/2.png' , -719),

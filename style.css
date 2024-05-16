@@ -6,44 +6,157 @@ body {
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-    min-height: 100vh;
     justify-content: center;
     margin: 0;
+    height: 100vh;
 }
 
 canvas {
     background-color: black;
     display: block;
-    border-radius: 10px;
-    
+    border-radius: 10px; 
 }
 
 h1 {
     font-size: 60px;
-    color: white;
+    color:black;
     font-family: "Bungee Spice", sans-serif;
 }
 
+h2{
+    font-family: "Bungee Spice", sans-serif;
+}
+
+p{
+    font-family: "Bungee Spice", sans-serif;
+}
 
 .startscreenImg,
 .endscreenImg,
 .winscreenImg {
     position: absolute;
     border-radius: 10px;
-    width: 720px;
+    width: 740px;
     height: 490px;
-    top: 53%;
+    overflow: hidden;
+    top: 57%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
 
+.howToPlayButton{
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 150px;
+    height: 50px;
+    font-size: 24px;
+    cursor: pointer;
+    border-radius: 10px;
+    border: unset;
+    background-color: #FFA400;
+    font-family: "Bungee Spice", sans-serif;
+    border: 1px solid black;
+}
 
+.how_to_play_container{
+    display: flex;
+	justify-content: center;
+	align-items: center;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	backdrop-filter: blur(20px);
+	position: absolute;
+	z-index: 3;
+}
 
-.startButton,
+.imprint_container{
+    display: flex;
+	justify-content: center;
+	align-items: center;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	backdrop-filter: blur(20px);
+	position: absolute;
+	z-index: 3;
+}
+
+.imprint{
+    display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	font-size: 25px;
+	background: rgba(255, 190, 64, 0.5);
+	width: 720px;
+    height: 490px;
+	position: relative;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1); 
+	border-radius: 10px;
+	letter-spacing: 1px;
+	padding: 20px 10px; 
+	margin: 20px 0;
+	text-align: center;
+}
+
+.how_to_play{
+    display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	font-size: 25px;
+	background: rgba(255, 190, 64, 0.5);
+	width: 500px;
+	position: relative;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1); 
+	border-radius: 10px;
+	letter-spacing: 1px;
+	padding: 20px 10px; 
+	margin: 20px 0;
+	text-align: center;
+}
+
+.imprintButton{
+    position: absolute;
+    top: 40%;
+    left: 65%;
+    transform: translate(-50%, -50%);
+    width: 150px;
+    height: 50px;
+    font-size: 24px;
+    cursor: pointer;
+    border-radius: 10px;
+    border: unset;
+    background-color:#FFA400;
+    font-family: "Bungee Spice", sans-serif;
+    border: 1px solid black;
+}
+
+.startButton{
+    position: absolute;
+    top: 40%;
+    left: 35%;
+    transform: translate(-50%, -50%);
+    width: 150px;
+    height: 50px;
+    font-size: 24px;
+    cursor: pointer;
+    border-radius: 10px;
+    border: unset;
+    background-color:#FFA400;
+    font-family: "Bungee Spice", sans-serif;
+    border: 1px solid black;  
+}
+
 #restartButton,
 #backToMenuButton {
     position: absolute;
-    top: 35%;
+    top: 40%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 200px;
@@ -52,16 +165,17 @@ h1 {
     cursor: pointer;
     border-radius: 10px;
     border: unset;
-    background-color: #FFDA28;
+    background-color:#FFA400;
     font-family: "Bungee Spice", sans-serif;
+    border: 1px solid black;
 }
 
 .icon_audio {
     width: 32px;
     height: 32px;
     position: absolute;
-    top: 10px;
-    left: 10px;
+    top: 30%;
+    left: 65%;
     cursor: pointer;
 }
 
@@ -82,12 +196,11 @@ h3 {
     font-size: 24px;
     font-family: "Bungee Spice", sans-serif;
     text-align: center;
-    color: white;
+    color:black;
 }
 
-
 .d-none {
-    display: none;
+    display: none; 
 }
 
 @font-face {
@@ -95,17 +208,36 @@ h3 {
     src: url(./fonts/Bungee_Spice/BungeeSpice-Regular.ttf);
 }
 
-@media only screen and (max-width: 720px) {
+@media(max-width: 1020px) {
+    .howToPlayButton{
+        left: 50%;
+    }
+    .startButton{
+        left: 25%;
+    }
+    .imprintButton{
+        left:75%
+    }
+    .icon_audio{
+        left:80%;
+    }
+}
+
+@media only screen and (max-width: 740px) {
 
     canvas {
         width: 100%;
         height: 100vh;
     }
+
+    #fullScreen{
+        width: 100%;
+    }
     .startscreenImg,
     .endscreenImg,
     .winscreenImg {
         width: 100%;
-        height: auto;
+        overflow: hidden;  
     }
 
     #landscape {
@@ -113,16 +245,21 @@ h3 {
         flex-direction: column-reverse;
     }
 
-   h1{
-    display: none;
-   }
-   h3{
-    display: none;
-   }
+    h1{
+        display: none;
+    }
 
     .touch-controls {
         width: auto;
         height: auto;
+    }
+
+    h2{
+        font-size: 24px;
+    }
+
+    p{
+        font-size: 16px;
     }
 
     #button-container {
@@ -141,11 +278,11 @@ h3 {
         left: 0;
         right: 0;
     }
-
+    
     .touch-btn {
         width: 40px;
         height: 40px;
-       margin-right: 16px;
+       margin-right: 28px;
         background: transparent;
         border: none;
     }
@@ -161,36 +298,58 @@ h3 {
         height: 100vh;
         width: 100%;
     }
-    h1 {
-        display: none;
+
+    #fullScreen{
+        width: 100%;
     }
-    h3{
+
+    .startscreenImg,
+    .endscreenImg,
+    .winscreenImg {
+        width: 100%;
+        overflow: hidden;
+    }
+
+    h1, #landscape{
         display: none;
     }
 
-    .startButton,
+    h2{
+        font-size: 24px;
+    }
+
+    p{
+        font-size: 16px;
+    }
+   
+    .startButton,.howToPlayButton,.imprintButton,
     #restartButton,
     #backToMenuButton {
         top: 15%;
     }
-
+    
     .mobileButtons.d-none {
         display: none;
     }
+
     .mobileButtons {
         display: flex;
         justify-content: space-between;
         position: absolute;
-        bottom: 15px;
-        left: 110px;
-        right: 150px;
-        padding: 5px;
+        bottom: 5px;
+        left: 40px;
+        right: 50px;
+    }
+
+    .icon_audio{
+        top:0;
+        left: 90%;
     }
 
     .touch-btn {
         width: 40px;
         height: 40px;
-        margin-left: 16px;
+        margin-left: 28px;
         background: transparent;
         border: none;
     }
@@ -199,6 +358,4 @@ h3 {
         width: 100%;
         height: auto;
     }
-
-
 }

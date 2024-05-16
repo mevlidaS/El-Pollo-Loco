@@ -13,7 +13,32 @@
     <div id="fullScreen">
         <div class="startscreen" id="startScreen">
             <img src="./img/9_intro_outro_screens/start/startscreen_2.png" alt="" class="startscreenImg">
-            <button id="startButton" class="startButton" onclick="startGame()"><b>Start</b></button>   
+            <button id="startButton" class="startButton" onclick="startGame()"><b>Start</b></button>
+            <button class="howToPlayButton" onclick="showHowToPlay()"><b>How to play</b></button>
+            <button class="imprintButton" onclick="showImprint()"><b>Impressum</b></button>
+            <div class="how_to_play_container d-none"  id="howToPlay"  onclick="hideHowToPlay()">
+                <div class="how_to_play">
+                    <h3>Move: Left or Right</h3>
+                    <h3>Jump: Up</h3>
+                    <h3>Throw Bottle: Space</h3>
+                </div>
+            </div>  
+            <div class="imprint_container d-none" id="imprint" onclick="hideImprint()">
+                <div class="imprint">
+                <div><h2>Impressum</h2><p>Angaben gemäß § 5 TMG</p><p>Mevlida Salendrkovic <br> 
+                    Pelkovenstr.77<br> 
+                    80992 München <br> 
+                    </p><p> <strong>Vertreten durch: </strong><br>
+                    Mevlida Salendrkovic<br>
+                    </p><p><strong>Kontakt:</strong> <br>
+                    Telefon: 0157-79434942<br>
+                    E-Mail: <a href='mailto:mevlida.salendrkovic@gmail.com'>mevlida.salendrkovic@gmail.com</a><br>
+                    Impressum vom <a href="https://www.impressum-generator.de">Impressum Generator</a> der <a href="https://www.kanzlei-hasselbach.de/">Kanzlei Hasselbach, Rechtsanwälte für Arbeitsrecht und Familienrecht</a>
+                     </div>
+
+                    </div>
+                     
+            </div> 
         </div>
         <div id="sound" onclick="toggleSoundActive()">
             <img id="sound-img" class ="icon_audio"src="./img/audio.png" alt="Sound" />
@@ -49,8 +74,6 @@
                 </button>
             </div>
         </div>
-
-        <h3 id="h3">Walk = Left or Right || Jump = Up || Throw Bottle = Space</h3>
 
         <div id="landscape">
             <img src="./img/turn.jpg" alt="">

@@ -11,12 +11,6 @@ class Character extends MovableObject{
         right: 30,
       };
 
-// walkingSound = new Audio('audio/running.mp3');
-// getHurtSound = new Audio('audio/character_hurt.mp3');
-// jumpSound = new Audio('audio/pepe_jump.wav');
-// sleepSound =new Audio ('audio/sleep.wav')
-
-
     idleTime = new Date().getTime();
     killed = false;
     IMAGES_WALKING = [
@@ -79,6 +73,12 @@ class Character extends MovableObject{
         'img/2_character_pepe/4_hurt/H-43.png',
     ]
     world;
+    
+    /**
+     * Constructor for initializing the character with various images and animations.
+     *
+     * @return {void} No return value.
+     */
     constructor(){
         super().loadImage('img/2_character_pepe/2_walk/W-21.png');
         this.loadImages(this.IMAGES_WALKING);
@@ -91,6 +91,12 @@ class Character extends MovableObject{
         this.animate();
     }
 
+    /**
+     * Animate the character by moving, checking conditions, and playing animations.
+     *
+     * @param {void} No parameters.
+     * @return {void} No return value.
+     */
     animate() {
         setInterval(() => {
             this.checkIfDead();
@@ -138,17 +144,19 @@ class Character extends MovableObject{
             }
         }, 1000 / 10);
     }
-
-   
     
-    
+    /**
+     * Check if the character is dead based on energy level and take appropriate actions.
+     *
+     * @param {void} No parameters.
+     * @return {void} No return value.
+     */
     checkIfDead() {
         if (this.energy == 0) {
             this.killed = true;
             this.playAnimation(this.IMAGES_DEAD);
             showEndScreen();
             clearAllIntervals();
-
             stopAllSounds();
         }
     }

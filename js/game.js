@@ -1,7 +1,10 @@
 let canvas;
-let world;
+let  world;
 let keyboard = new Keyboard();
 
+/**
+ * Initializes the game by setting up the level, creating the game world, updating sounds, and sound button icon.
+ */
 function init() {
     initLevel();
     canvas = document.getElementById('canvas');
@@ -10,6 +13,9 @@ function init() {
     updateSoundButtonIcon();
 }
 
+/**
+ * Shows mobile buttons based on window size.
+ */
 function showMobileButtons() {
     if (window.innerWidth <= 720 || window.innerHeight <= 480) {
         const mobileButtons = document.getElementById('mobileButtons');
@@ -19,6 +25,10 @@ function showMobileButtons() {
     }
 }
 
+/**
+ * Hides the mobile buttons by adding the 'd-none' class if the mobileButtons element exists.
+ *
+ */
 function hideMobileButtons() {
     const mobileButtons = document.getElementById('mobileButtons');
     if (mobileButtons) {
@@ -26,8 +36,27 @@ function hideMobileButtons() {
     }
 }
 
+function showImprint() {
+    document.getElementById('imprint').classList.remove('d-none');
+}
 
+function hideImprint() {
+    document.getElementById('imprint').classList.add('d-none');
+}
 
+function showHowToPlay() {
+    document.getElementById('howToPlay').classList.remove('d-none');
+}
+
+function hideHowToPlay() {
+    document.getElementById('howToPlay').classList.add('d-none');
+}
+
+/**
+ * Function to start the game by initializing, hiding the start screen, showing the canvas, and displaying mobile buttons.
+ *
+ * @return {void} No return value
+ */
 function startGame() {
     init();
     const startScreen = document.getElementById('startScreen');
@@ -38,10 +67,13 @@ function startGame() {
     if (canvas) {
         canvas.classList.remove('d-none');
     }
-
-    showMobileButtons();
+    showMobileButtons(); 
 }
 
+/**
+ * Function to show the start screen by updating the CSS classes of the startScreen and canvas elements.
+ *
+ */
 function showStartScreen() {
     const startScreen = document.getElementById('startScreen');
     const canvas = document.getElementById('canvas');
@@ -53,8 +85,33 @@ function showStartScreen() {
     }
 }
 
+/**
+ * Function to end the game by showing the end screen and hiding the mobile buttons.
+ *
+ */
 function endGame() {
     showEndScreen();
+    hideMobileButtons();
+}
+
+function showEndScreen() {
+    const endScreen = document.getElementById('endScreen');
+    const h1 = document.querySelector('h1');
+    const h3 = document.querySelector('h3');
+    if (endScreen) {
+        endScreen.classList.remove('d-none');
+    }
+    const canvas = document.getElementById('canvas');
+    if (canvas) {
+        canvas.classList.add('d-none');
+    }
+    if (h1) {
+        h1.classList.add('d-none');
+    }
+    if (h3) {
+        h3.classList.add('d-none');
+    }
+    stopAllSounds();
     hideMobileButtons();
 }
 
@@ -80,6 +137,10 @@ function winGame() {
     hideMobileButtons();
 }
 
+/**
+ * Function to handle going back to the menu screen by clearing intervals and updating the display elements.
+ *
+ */
 function backToMenu() {
     clearAllIntervals();
     const winScreen = document.getElementById('winScreen');
@@ -104,27 +165,11 @@ function backToMenu() {
     }
 }
 
-function showEndScreen() {
-    const endScreen = document.getElementById('endScreen');
-    const h1 = document.querySelector('h1');
-    const h3 = document.querySelector('h3');
-    if (endScreen) {
-        endScreen.classList.remove('d-none');
-    }
-    const canvas = document.getElementById('canvas');
-    if (canvas) {
-        canvas.classList.add('d-none');
-    }
-    if (h1) {
-        h1.classList.add('d-none');
-    }
-    if (h3) {
-        h3.classList.add('d-none');
-    }
-    stopAllSounds();
-    hideMobileButtons();
-}
-
+/**
+ * Restart the game by clearing intervals, updating screen elements, and showing the canvas.
+ *
+ * @return {void} No return value
+ */
 function restartGame() {
     clearAllIntervals();
     const endScreen = document.getElementById('endScreen');
@@ -148,6 +193,7 @@ function restartGame() {
         h3.classList.remove('d-none');
     }
     init();
+    showMobileButtons();
 }
 
 function clearAllIntervals() {

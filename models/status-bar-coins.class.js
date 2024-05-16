@@ -1,5 +1,4 @@
 class StatusBarCoins extends DrawableObject {
-    
     IMAGES_COINS = [
         'img/7_statusbars/1_statusbar/1_statusbar_coin/green/0.png',
         'img/7_statusbars/1_statusbar/1_statusbar_coin/green/20.png',
@@ -7,7 +6,6 @@ class StatusBarCoins extends DrawableObject {
         'img/7_statusbars/1_statusbar/1_statusbar_coin/green/60.png',
         'img/7_statusbars/1_statusbar/1_statusbar_coin/green/80.png',
         'img/7_statusbars/1_statusbar/1_statusbar_coin/green/100.png',
-
     ];
 
     percentage = 100;
@@ -54,6 +52,5 @@ class StatusBarCoins extends DrawableObject {
             return 5;
         }
         return Math.min(Math.floor(this.percentage / 20), this.IMAGES_COINS.length - 1);
-    }
-    
+    }   
 }

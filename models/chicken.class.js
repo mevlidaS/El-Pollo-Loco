@@ -18,7 +18,14 @@ class Chicken extends MovableObject{
 
     IMAGES_DEAD = [
         'img/3_enemies_chicken/chicken_normal/2_dead/dead.png'
-    ]
+    ];
+    
+    /**
+     * Constructor for initializing a Chicken object at the specified x-coordinate.
+     *
+     * @param {number} x - The x-coordinate of the Chicken.
+     * @return {void} No return value.
+     */
     constructor(x){
         super().loadImage('img/3_enemies_chicken/chicken_normal/1_walk/1_w.png');
         this.loadImages(this.IMAGES_WALKING);
@@ -28,6 +35,12 @@ class Chicken extends MovableObject{
         this.animate();
     }
 
+    /**
+     * Animates the object based on its state of being alive or dead, moving left, and playing animations accordingly.
+     *
+     * @param {void} No parameters.
+     * @return {void} No return value.
+     */
     animate() {
         setInterval(() => {
             if (!this.isDead) {

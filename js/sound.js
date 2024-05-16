@@ -15,6 +15,11 @@ function initGame() {
     updateSoundButtonIcon();
 }
 
+/**
+ * Plays the given audio if sound is active and audio is provided.
+ *
+ * @param {Object} audio - The audio object to be played.
+ */
 function playAudio(audio) {
     if (soundActive && audio) {
         audio.volume = 0.5;
@@ -22,6 +27,11 @@ function playAudio(audio) {
     }
 }
 
+/**
+ * Toggles the sound active status, updates all sounds, and updates the sound button icon.
+ *
+ * @return {void} 
+ */
 function toggleSoundActive() {
     soundActive = !soundActive;
     updateAllSounds();

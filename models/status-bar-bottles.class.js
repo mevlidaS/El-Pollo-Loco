@@ -9,7 +9,7 @@ IMAGES_BOTTLES = [
     'img/7_statusbars/1_statusbar/3_statusbar_bottle/green/100.png'
 ];
 
-percentage = 100;
+percentage = 0;
 bottleAmount = 0;
 
 constructor() {
@@ -22,20 +22,36 @@ constructor() {
     this.setPercentage(0);
 }
 
+/**
+ * Set the percentage value, calculate the path based on the percentage, and update the image accordingly.
+ *
+ * @param {number} percentage - The percentage value to set.
+ * @return {void} 
+ */
 setPercentage(percentage) {
     this.percentage = percentage;
     let path = this.IMAGES_BOTTLES[this.resolveImageIndex(percentage)];
     this.img = this.imageCache[path];
 }
 
+/**
+ * Update the bottle amount by adding 20, ensure it does not exceed 100, and set the percentage based on the updated amount.
+ *
+ * @return {void} Update status bar when collecting bottles
+ */
 collectBottle() {
     this.bottleAmount += 20;
     if (this.bottleAmount > 100) {
         this.bottleAmount = 100;
     }
-    this.setPercentage(this.bottleAmount); // Update status bar when collecting bottles
+    this.setPercentage(this.bottleAmount);
 }
 
+/**
+ * Determines the index of the image based on the current percentage value.
+ *
+ * @return {number} The index of the image to be displayed.
+ */
 resolveImageIndex() {
     if (this.percentage == 0) {
         return 0;
@@ -50,7 +66,7 @@ resolveImageIndex() {
     } else if (this.percentage == 100) {
         return 5;
     }
-    return Math.min(Math.floor(this.percentage / 20), this.IMAGES_BOTTLES.length - 1);
-}
+        return Math.min(Math.floor(this.percentage / 20), this.IMAGES_BOTTLES.length - 1);
+    }
 
 }

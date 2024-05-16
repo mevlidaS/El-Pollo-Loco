@@ -12,6 +12,15 @@ class Coin extends MovableObject {
         'img/8_coin/coin_2.png'
     ];
 
+    /**
+     * Constructor for initializing a Coin object at the specified coordinates with a given height and width.
+     *
+     * @param {number} x - The x-coordinate of the Coin.
+     * @param {number} y - The y-coordinate of the Coin.
+     * @param {number} height - The height of the Coin.
+     * @param {number} width - The width of the Coin.
+     * @return {void} No return value.
+     */
     constructor(x,y,height,width) {
         super().loadImage('img/8_coin/coin_1.png');
         this.loadImages(this.IMAGES_COINS);
@@ -23,6 +32,12 @@ class Coin extends MovableObject {
         this.animateCoins();
     }
 
+    /**
+     * Animates the coins by playing the coin animation at regular intervals.
+     *
+     * @param {void} No parameters.
+     * @return {void} No return value.
+     */
     animateCoins() {
         setInterval(() => {
             this.playAnimation(this.IMAGES_COINS);
