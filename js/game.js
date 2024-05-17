@@ -36,18 +36,36 @@ function hideMobileButtons() {
     }
 }
 
+/**
+ * Shows the imprint element by removing the 'd-none' class.
+ *
+ */
 function showImprint() {
     document.getElementById('imprint').classList.remove('d-none');
 }
 
+/**
+ * Hides the imprint element by adding the 'd-none' class.
+ *
+ * @return {void} No return value
+ */
 function hideImprint() {
     document.getElementById('imprint').classList.add('d-none');
 }
 
+/**
+ * Shows how to play by removing the 'd-none' class from the 'howToPlay' element.
+ *
+ * @return {void} No return value
+ */
 function showHowToPlay() {
     document.getElementById('howToPlay').classList.remove('d-none');
 }
 
+/**
+ * Hides the howToPlay element by adding the 'd-none' class.
+ *
+ */
 function hideHowToPlay() {
     document.getElementById('howToPlay').classList.add('d-none');
 }
@@ -94,6 +112,10 @@ function endGame() {
     hideMobileButtons();
 }
 
+/**
+ * Function to show the end screen by updating the display elements and hiding specific elements.
+ *
+ */
 function showEndScreen() {
     const endScreen = document.getElementById('endScreen');
     const h1 = document.querySelector('h1');
@@ -115,6 +137,10 @@ function showEndScreen() {
     hideMobileButtons();
 }
 
+/**
+ * Function to handle the win game scenario by updating the display elements, clearing intervals, and stopping sounds except for the win sound.
+ *
+ */
 function winGame() {
     const winScreen = document.getElementById('winScreen');
     const h1 = document.querySelector('h1');
@@ -196,6 +222,12 @@ function restartGame() {
     showMobileButtons();
 }
 
+/**
+ * Clears all intervals up to 9999.
+ *
+ * @param {void} No parameters.
+ * @return {void} No return value
+ */
 function clearAllIntervals() {
     for (let i = 1; i < 9999; i++) window.clearInterval(i);
 }

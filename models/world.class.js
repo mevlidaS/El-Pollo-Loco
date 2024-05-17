@@ -19,7 +19,6 @@ class World{
     END_BOSS_AREA_X = 2500;
     splashHeight = 370;
     isGameOver = false;
-    
    
     /**
      * Constructor for initializing the game world with the canvas, keyboard, and callbacks.
@@ -43,6 +42,12 @@ class World{
        
     }
     
+    /**
+     * Sets the world property of the character to the current world instance.
+     *
+     * @param None
+     * @return None
+     */
     setWorld(){
         this.character.world = this;
     }
@@ -70,6 +75,7 @@ class World{
             this.checkEndbossArea();
         }, 40);
     }
+    
     /**
      * Sets the game to end and stops the actions of the endboss.
      *
@@ -127,35 +133,27 @@ class World{
     }
 
     /**
-     * Checks for interactions between the character and enemies during jumping actions.
+     * Executes the character's interactions with enemies based on collision detection.
      *
-     * @param None
-     * @return None
+     * @param {void} No parameters.
+     * @return {void} No return value.
      */
     checkJumpOnEnemies() {
-        if (this.character.y < 110) {
-            this.lastJumpTime = true;
-        }
-        if (this.character.y >= 180) {
-            this.lastJumpTime = false;
-        }
-        this.level.enemies.forEach((enemy, index) => {
-            if (this.character.isColliding(enemy)) {
-                if (this.character.isAboveGround()) {
+        const character = this.character;
+        const enemies = this.level.enemies;
 
-                    if (this.lastJumpTime == true) {
-                        this.killChicken(enemy, index);
-                        this.lastJumpTime = false;
-                        this.lastJump = true;
-                    }
+        this.lastJumpTime = character.y < 110 ? true : (character.y >= 180 ? false : this.lastJumpTime);
+
+        enemies.forEach((enemy, index) => {
+            if (character.isColliding(enemy)) {
+                if (character.isAboveGround() && this.lastJumpTime) {
+                    this.killChicken(enemy, index);
+                    this.lastJump = true;
+                } else {
+                    character.hit(this.lastJump);
+                    this.statusBar.setPercentage(character.energy);
                 }
-                else {
-                    this.character.hit(this.lastJump);
-                    this.statusBar.setPercentage(this.character.energy);
-                }
-                setTimeout(() => {
-                    this.lastJump = false;
-                }, 700);
+                setTimeout(() => this.lastJump = false, 700);
             }
         });
     }
@@ -175,20 +173,32 @@ class World{
         }, 600);
     }
 
+   
     /**
      * Checks collisions between the character and enemies and updates character status.
      *
      * @param {void} No parameters.
      * @return {void} No return value.
      */
-    checkCollisions(){
+
+    checkCollisions() {
         this.level.enemies.forEach((enemy) => {
-            if(this.character.isColliding(enemy)){
-                    this.character.hit();
-                    this.statusBar.setPercentage(this.character.energy);
-            }
-        });  
-    }
+          if (
+            this.character.isColliding(enemy) &&
+            !this.character.isAboveGround() &&
+            enemy.energy === 0 
+          ) {
+            this.character.hit();
+            this.statusBar.setPercentage(this.character.energy);
+          }
+        });
+    
+        this.throwableObjects.forEach((throwableObject, i) => {
+          if (this.character.isColliding(throwableObject)) {
+            this.throwableObjects.splice(i, 1); // Entfernt das Chicken aus dem Spiel
+          }
+        });
+      }
 
     /**
      * Checks collisions with coins and updates collected coins and status bar accordingly.
@@ -203,11 +213,17 @@ class World{
                 this.statusBarCoins.collectCoin();
                 this.level.coins.splice(index, 1);
                 this.statusBarCoins.setPercentage(this.statusBarCoins.coinAmount);
-               playAudio(coinCollectSound);
+                playAudio(coinCollectSound);
             }
         });
     }
 
+    /**
+     * Checks collisions with bottles and updates collected bottles and status bar accordingly.
+     *
+     * @param {void} No parameters.
+     * @return {void} No return value.
+     */
     checkCollisionsWithBottles() {
         this.level.bottles.forEach((bottle, index) => {
             if (this.character.isColliding(bottle) && this.collectedBottles < 5) {
@@ -215,8 +231,7 @@ class World{
                 this.statusBarBottles.collectBottle();
                 this.level.bottles.splice(index, 1);
                 this.statusBarBottles.setPercentage(this.statusBarBottles.bottleAmount);
-                playAudio(bottleCollectSound);
-                
+                playAudio(bottleCollectSound);  
             }
         });
     }
@@ -274,7 +289,6 @@ class World{
                 if (throwableObject.isColliding(enemy)) {
                     this.isDead = true;
                     this.killChicken(enemy);
-
                     this.throwableObjects.splice(index, 1);
                 }
             });
@@ -352,30 +366,54 @@ class World{
         });
     }
 
+    /**
+     * Iterates through the objects array and adds each object to the map using the addToMap method.
+     *
+     * @param {array} objects - An array of objects to be added to the map.
+     * @return {void} No return value
+     */
     addObjectsToMap(objects){
         objects.forEach((o) => {
             this.addToMap(o);
         })
     }
+
+    /**
+     * Adds the movable object to the map, optionally flipping the image based on direction.
+     *
+     * @param {object} mo - The movable object to be added to the map.
+     * @return {void} No return value
+     */
     addToMap(mo){
         if(mo.otherDirection){
             this.flipImage(mo);
         }
-       mo.draw(this.ctx);
-       mo.drawFrame(this.ctx);
-        
-        
+        mo.draw(this.ctx);
+        mo.drawFrame(this.ctx);
         if(mo.otherDirection){
             this.flipImageBack(mo);
         }
     }
 
+    /**
+     * Saves the canvas context, translates it, scales it, and updates the x position of the movable object.
+     *
+     * @param {object} mo - The movable object to be flipped.
+     * @return {void} No return value
+     */
     flipImage(mo){
         this.ctx.save();
         this.ctx.translate(mo.width, 0);
         this.ctx.scale(-1, 1);
         mo.x = mo.x * -1;
     }
+    
+    /**
+     * Reverts the x position of the movable object and restores the canvas context.
+     *
+     * @param {object} mo - The movable object to be reverted.
+     * @return {void} No return value
+     */
     flipImageBack(mo){
         mo.x = mo.x * -1;
         this.ctx.restore();

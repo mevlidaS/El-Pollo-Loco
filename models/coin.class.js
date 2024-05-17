@@ -44,6 +44,12 @@ class Coin extends MovableObject {
         }, 1000/3);
     }
     
+    /**
+     * Marks the coin as collected.
+     *
+     * @param {void} No parameters.
+     * @return {void} No return value.
+     */
     collect() {
         this.collected = true;
     }

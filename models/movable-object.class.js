@@ -77,22 +77,52 @@ class MovableObject extends DrawableObject {
         return timepassed < 1;
     }
 
+    /**
+     * Checks if the object is dead based on its energy level.
+     *
+     * @return {boolean} Indicates whether the object is dead.
+     */
     isDead() {
         return this.energy == 0;
     }
    
+    /**
+     * Moves the object to the right based on its speed.
+     *
+     * @param {void} No parameters.
+     * @return {void} No return value.
+     */
     moveRight(){
         this.x += this.speed;
     }
+    
+    /**
+     * Moves the object to the left based on its speed.
+     *
+     * @param {void} No parameters.
+     * @return {void} No return value.
+     */
     moveLeft(){
         this.x -= this.speed;
     }
 
+    /**
+     * Sets the vertical speed and updates the idle time of the object.
+     *
+     * @param {void} No parameters.
+     * @return {void} No return value.
+     */
     jump(){
         this.speedY = 25;
         this.idleTime = new Date().getTime();
     }
 
+    /**
+     * Plays the animation for the object using the provided images.
+     *
+     * @param {array} images - The array of image paths for the animation.
+     * @return {void} No return value
+     */
     playAnimation(images) {
          let i = this.currentImage % images.length;
          let path = images[i];

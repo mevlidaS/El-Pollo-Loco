@@ -92,61 +92,107 @@ class Character extends MovableObject{
     }
 
     /**
-     * Animate the character by moving, checking conditions, and playing animations.
+     * A function that initiates different intervals for checking if dead, movement, and animation.
      *
      * @param {void} No parameters.
      * @return {void} No return value.
      */
     animate() {
+        this.startCheckIfDeadInterval();
+        this.startMovementInterval();
+        this.startAnimationInterval();
+    }
+    
+    /**
+     * Initiates an interval to check if the character is dead.
+     *
+     * @param {void} No parameters.
+     * @return {void} No return value.
+     */
+    startCheckIfDeadInterval() {
         setInterval(() => {
             this.checkIfDead();
         }, 50);
-
-
+    }
+    
+    /**
+     * Initiates an interval for movement handling at a set rate.
+     *
+     * @param {void} No parameters.
+     * @return {void} No return value.
+     */
+    startMovementInterval() {
         setInterval(() => {
-            if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
-                this.moveRight();
-                this.otherDirection = false;
-                playAudio(walkingSound);
-            }
-            if (this.world.keyboard.LEFT && this.x > 0) {
-                this.moveLeft();
-                this.otherDirection = true;
-                playAudio(walkingSound);
-            }
-            if (this.world.keyboard.UP && !this.isAboveGround()) {
-                this.jump();
-                playAudio(jumpSound);
-            }
-            this.world.camera_x = -this.x + 100;
-
+            this.handleMovement();
         }, 1000 / 60);
-
+    }
+    
+    /**
+     * Initiates an interval for handling animations at a specified frequency.
+     *
+     * @param {void} No parameters.
+     * @return {void} No return value.
+     */
+    startAnimationInterval() {
         setInterval(() => {
-            const currentTime = new Date().getTime();
-            const timeSinceLastMove = currentTime - this.idleTime;
-
-            if (this.isDead()) {
-                this.playAnimation(this.IMAGES_DEAD);
-            } else if (this.isHurt()) {
-                this.playAnimation(this.IMAGES_HURT);
-               playAudio(getHurtSound);
-            } else if (this.isAboveGround()) {
-                this.playAnimation(this.IMAGES_JUMPING);
-            } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-                this.playAnimation(this.IMAGES_WALKING);
-                this.idleTime = currentTime;
-            } else if (timeSinceLastMove > 5000) {
-                this.playAnimation(this.IMAGES_LONG_IDLE);
-                playAudio(sleepSound);
-            } else if (!this.isAboveGround()) {
-                this.playAnimation(this.IMAGES_IDLE);
-            }
+            this.handleAnimation();
         }, 1000 / 10);
     }
     
     /**
-     * Check if the character is dead based on energy level and take appropriate actions.
+     * Handles the movement of the character based on keyboard input and updates the camera position.
+     *
+     * @param {void} No parameters.
+     * @return {void} No return value.
+     */
+    handleMovement() {
+        if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
+            this.moveRight();
+            this.otherDirection = false;
+            playAudio(walkingSound);
+        }
+        if (this.world.keyboard.LEFT && this.x > 0) {
+            this.moveLeft();
+            this.otherDirection = true;
+            playAudio(walkingSound);
+        }
+        if (this.world.keyboard.UP && !this.isAboveGround()) {
+            this.jump();
+            playAudio(jumpSound);
+        }
+        this.world.camera_x = -this.x + 100;
+    }
+    
+    /**
+     * Handles the animation logic based on the character's state and triggers corresponding animations.
+     *
+     * @param {void} No parameters.
+     * @return {void} No return value.
+     */
+    handleAnimation() {
+        const currentTime = new Date().getTime();
+        const timeSinceLastMove = currentTime - this.idleTime;
+    
+        if (this.isDead()) {
+            this.playAnimation(this.IMAGES_DEAD);
+        } else if (this.isHurt()) {
+            this.playAnimation(this.IMAGES_HURT);
+            playAudio(getHurtSound);
+        } else if (this.isAboveGround()) {
+            this.playAnimation(this.IMAGES_JUMPING);
+        } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
+            this.playAnimation(this.IMAGES_WALKING);
+            this.idleTime = currentTime;
+        } else if (timeSinceLastMove > 5000) {
+            this.playAnimation(this.IMAGES_LONG_IDLE);
+            playAudio(sleepSound);
+        } else if (!this.isAboveGround()) {
+            this.playAnimation(this.IMAGES_IDLE);
+        }
+    }
+    
+    /**
+     * Checks if the character is dead based on energy level and initiates corresponding actions.
      *
      * @param {void} No parameters.
      * @return {void} No return value.
@@ -160,4 +206,4 @@ class Character extends MovableObject{
             stopAllSounds();
         }
     }
-}
+    }

@@ -30,6 +30,14 @@ IMAGES_BOTTLE_SPLASH = [
     'img/6_salsa_bottle/bottle_rotation/bottle_splash/6_bottle_splash.png',
 ];
 
+/**
+ * Constructor for initializing a ThrowableObject at the specified coordinates with direction.
+ *
+ * @param {number} x - The x-coordinate of the ThrowableObject.
+ * @param {number} y - The y-coordinate of the ThrowableObject.
+ * @param {direction} direction - The direction of the ThrowableObject.
+ * @return {void} No return value.
+ */
 constructor(x, y,direction) {
     super().loadImage('img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png');
     this.loadImages(this.IMAGES_BOTTLE_SPLASH);

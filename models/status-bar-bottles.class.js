@@ -12,6 +12,11 @@ IMAGES_BOTTLES = [
 percentage = 0;
 bottleAmount = 0;
 
+/**
+ * Constructor for initializing the StatusBarBottles with images, position, and percentage set to 0.
+ *
+ * @return {void} No return value.
+ */
 constructor() {
     super();
     this.loadImages(this.IMAGES_BOTTLES);

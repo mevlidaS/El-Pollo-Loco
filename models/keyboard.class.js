@@ -52,17 +52,18 @@ addTouchEvent(buttonId, action) {
     const button = document.getElementById(buttonId);
     if (button) {
         button.addEventListener('touchstart', (e) => {
-            e.preventDefault();
+            if (e.cancelable) e.preventDefault();
             this[action] = true;
-        });
+        }, { passive: false });
         button.addEventListener('touchend', (e) => {
-            e.preventDefault();
+            if (e.cancelable) e.preventDefault();
             this[action] = false;
-        });
+        }, { passive: false });
     } else {
-        
+        console.warn(`Button with ID ${buttonId} not found.`);
     }
 }
+
 
 /**
  * Handles key press events to update the direction flags based on the keyCode.

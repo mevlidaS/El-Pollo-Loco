@@ -147,6 +147,12 @@ class Endboss extends MovableObject {
         }
     }
 
+    /**
+     * Animates the end boss based on its state (dead, aggressive, in damage state, or walking) by playing corresponding animations at a regular interval.
+     *
+     * @param {void} No parameters.
+     * @return {void} No return value.
+     */
     animate() {
         setInterval(() => {
             if (this.isDead) {
@@ -178,42 +184,85 @@ class Endboss extends MovableObject {
     }
 
     /**
-     * Handles the logic when the Endboss receives a hit by a bottle.
-     * Updates the energy level, checks if the Endboss is dead, and triggers corresponding animations.
+     * Executes a series of actions when the object receives a hit by a bottle.
      *
      * @param {void} No parameters.
      * @return {void} No return value.
      */
     receiveHitByBottle() {
+        this.reduceEnergy();
+        this.checkIfDead();
+        this.updateDamageState();
+        this.updateAggressiveState();
+    }
+
+    /**
+     * Reduces the energy of the object by the damage per hit amount.
+     *
+     * @param {} No parameters.
+     * @return {} No return value.
+     */
+    reduceEnergy() {
         this.energy -= this.damagePerHit;
+    }
+
+    /**
+     * Checks if the object is dead based on its energy level and triggers corresponding actions.
+     *
+     * @param {void} No parameters.
+     * @return {void} No return value.
+     */
+    checkIfDead() {
         if (this.energy <= 0) {
             this.isDead = true;
             this.playAnimation(this.IMAGES_DEAD);
         }
-        if (this.energy >= 60){
-            this.inDamageState = true;
-            this.playAnimation(this.IMAGES_HURT);
-          playAudio(endbossHurtSound);
-            setTimeout(() => {
-                this.inDamageState = false;
-                if (!this.isDead) {
-                    this.playAnimation(this.IMAGES_WALKING);
-                }
-            }, 20000 / 60 );
+    }
+
+    /**
+     * Updates the damage state of the object based on its energy level.
+     *
+     * @param {} No parameters.
+     * @return {} No return value.
+     */
+    updateDamageState() {
+        if (this.energy >= 60) {
+            this.enterDamageState(this.IMAGES_HURT, 20000);
         }
-        if (this.energy <= 60){
-            this.inDamageState = true;
+    }
+
+    /**
+     * Updates the aggressive state based on the energy level and triggers an attack animation if energy is low.
+     *
+     * @param {} No parameters.
+     * @return {} No return value.
+     */
+    updateAggressiveState() {
+        if (this.energy <= 60) {
             this.aggressive = true;
-            this.playAnimation(this.IMAGES_ATTACK);
-            playAudio(endbossHurtSound);
-            setTimeout(() => {
-                if (!this.isDead) {
-                    this.inDamageState = false;
-                    this.playAnimation(this.IMAGES_WALKING);
-                    this.aggressive = false;
-                }
-            }, 60000 / 60 );
-        }           
+            this.enterDamageState(this.IMAGES_ATTACK, 60000);
+        }
+    }
+
+    /**
+     * Enters the end boss into a damage state, plays the provided animation images, triggers a hurt sound,
+     * and transitions out of the damage state after a specified duration if the end boss is not dead.
+     *
+     * @param {array} animationImages - The array of image paths for the damage animation.
+     * @param {number} duration - The duration of the damage state in milliseconds.
+     * @return {void} No return value.
+     */
+    enterDamageState(animationImages, duration) {
+        this.inDamageState = true;
+        this.playAnimation(animationImages);
+        playAudio(endbossHurtSound);
+        setTimeout(() => {
+            if (!this.isDead) {
+                this.inDamageState = false;
+                this.playAnimation(this.IMAGES_WALKING);
+                this.aggressive = false;
+            }
+        }, duration / 60);
     }
 
     /**
@@ -231,6 +280,12 @@ class Endboss extends MovableObject {
         }, 12000 / 60 );
     }
 
+    /**
+     * Animates the end boss by running the animation loop using requestAnimationFrame.
+     *
+     * @param {void} No parameters.
+     * @return {void} No return value.
+     */
     animateEndboss() {
         if (this.animationFrameId) {
             cancelAnimationFrame(this.animationFrameId);
